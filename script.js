@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function sendWebhook(data) {
         try {
-            const response = await fetch('https://workflows.ops.sandbox.cuentamono.com/webhook-test/f5aee968-719a-4bb5-9915-7493b7b7394f', {
+            const response = await fetch('https://workflows.ops.sandbox.cuentamono.com/webhook/f5aee968-719a-4bb5-9915-7493b7b7394f', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
