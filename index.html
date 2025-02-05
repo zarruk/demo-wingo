@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal para creación de tarjeta de un cliente Bolívar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="https://cloudfront-us-east-1.images.arcpublishing.com/semana/XHE2BGGCUJGWZFTJM6O22LAY4M.jpg" alt="Logo Bolívar" class="logo">
+            <h1>Portal para creación de tarjeta de un cliente Bolívar</h1>
+        </header>
+        
+        <main>
+            <div class="upload-section">
+                <h2>Subir archivo de clientes</h2>
+                <p>Por favor, sube un archivo Excel o CSV en este <a href="https://docs.google.com/spreadsheets/d/1OfMnApAQJZythFPNQ_1aGEWwFR-ZniUj8ArmHvUa79w/edit?gid=0#gid=0" target="_blank">formato</a></p>
+                
+                <div class="file-upload">
+                    <div class="drop-zone" id="dropZone">
+                        <p>Arrastra tu archivo aquí o</p>
+                        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv">
+                        <label for="fileInput">Selecciona un archivo</label>
+                    </div>
+                    <button id="uploadBtn">Procesar archivo</button>
+                </div>
+            </div>
+            
+            <div id="message" class="message"></div>
+        </main>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

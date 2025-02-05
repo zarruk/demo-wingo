@@ -1,0 +1,110 @@
+:root {
+    --bolivar-green: #008751;
+    --bolivar-yellow: #FFD700;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    max-width: 200px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: var(--bolivar-green);
+    font-size: 24px;
+}
+
+.upload-section {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.file-upload {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    background-color: var(--bolivar-green);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #006b40;
+}
+
+.message {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.drop-zone {
+    border: 2px dashed var(--bolivar-green);
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    transition: background-color 0.3s;
+}
+
+.drop-zone.dragover {
+    background-color: #e9ecef;
+    border-color: #006b40;
+}
+
+.drop-zone input[type="file"] {
+    display: none;
+}
+
+.drop-zone label {
+    color: var(--bolivar-green);
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.upload-section a {
+    color: var(--bolivar-green);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.upload-section a:hover {
+    text-decoration: underline;
+} 
