@@ -7,6 +7,11 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static('public'));
 
+// Ruta raíz para servir index.html
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
+
 // Almacenamiento temporal de tarjetas (en producción usaríamos una base de datos)
 const cards = new Map();
 

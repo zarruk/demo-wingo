@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: demo-bolivar
+    name: demo-bolivar-1
     env: node
     buildCommand: npm install
     startCommand: npm start
