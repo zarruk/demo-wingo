@@ -1,0 +1,17 @@
+{
+  "name": "demo-bolivar",
+  "version": "1.0.0",
+  "description": "Portal web para la creación de tarjetas de clientes Bolívar. Este portal permite cargar archivos Excel/CSV con información de clientes y enviarla a través de un webhook.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}
