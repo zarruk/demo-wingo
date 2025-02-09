@@ -80,12 +80,14 @@
 
         .card__details {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
+            gap: 40px;
             color: var(--blanco);
         }
 
         .card__holder span,
-        .card__expires span {
+        .card__expires span,
+        .card__cvv span {
             font-size: 12px;
             opacity: 0.7;
             display: block;
@@ -105,11 +107,15 @@
                 <div class="card__details">
                     <div class="card__holder">
                         <span>Card Holder</span>
-                        <div id="cardHolder">NOMBRE DEL TITULAR</div>
+                        <div id="cardHolder"></div>
                     </div>
                     <div class="card__expires">
                         <span>Expires</span>
                         <div id="expiryDate"></div>
+                    </div>
+                    <div class="card__cvv">
+                        <span>CVV</span>
+                        <div id="cvvNumber"></div>
                     </div>
                 </div>
             </div>
@@ -118,11 +124,13 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const cardId = window.location.pathname.split('/').pop();
+            console.log('Card ID:', cardId);
             try {
                 const response = await fetch(`/api/card/${cardId}`);
                 if (!response.ok) throw new Error('Tarjeta no encontrada');
                 
                 const cardData = await response.json();
+                console.log('Datos recibidos en producción:', cardData);
                 
                 // Formatear número de tarjeta
                 const formattedNumber = cardData.cardNumber.replace(/(\d{4})/g, '$1 ').trim();
@@ -130,8 +138,23 @@
                 
                 // Formatear fecha de expiración
                 document.getElementById('expiryDate').textContent = cardData.expiryDate;
+                
+                // Mostrar nombre del titular - DIRECTO Y SIMPLE
+                const holderElement = document.getElementById('cardHolder');
+                if (cardData && cardData.cardHolder) {
+                    holderElement.textContent = cardData.cardHolder;
+                } else {
+                    console.error('cardHolder no encontrado en:', cardData);
+                }
+                
+                // Mostrar CVV
+                document.getElementById('cvvNumber').textContent = cardData.cvv;
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error al cargar la tarjeta:', {
+                    message: error.message,
+                    cardId: cardId,
+                    stack: error.stack
+                });
             }
         });
     </script>
