@@ -101,20 +101,39 @@
                     <img src="https://cloudfront-us-east-1.images.arcpublishing.com/semana/XHE2BGGCUJGWZFTJM6O22LAY4M.jpg" alt="Bolívar" class="card__logo-bolivar">
                     <img src="/visa-svgrepo-com.svg" alt="Visa" class="card__logo-visa">
                 </div>
-                <div class="card__number" id="cardNumber">**** **** **** ****</div>
+                <div class="card__number" id="cardNumber"></div>
                 <div class="card__details">
                     <div class="card__holder">
                         <span>Card Holder</span>
-                        <div>NOMBRE DEL TITULAR</div>
+                        <div id="cardHolder">NOMBRE DEL TITULAR</div>
                     </div>
                     <div class="card__expires">
                         <span>Expires</span>
-                        <div id="expiryDate">MM/YY</div>
+                        <div id="expiryDate"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const cardId = window.location.pathname.split('/').pop();
+            try {
+                const response = await fetch(`/api/card/${cardId}`);
+                if (!response.ok) throw new Error('Tarjeta no encontrada');
+                
+                const cardData = await response.json();
+                
+                // Formatear número de tarjeta
+                const formattedNumber = cardData.cardNumber.replace(/(\d{4})/g, '$1 ').trim();
+                document.getElementById('cardNumber').textContent = formattedNumber;
+                
+                // Formatear fecha de expiración
+                document.getElementById('expiryDate').textContent = cardData.expiryDate;
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    </script>
 </body>
 </html> 
