@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarjeta Bolívar - Visa</title>
+    <style>
+        :root {
+            --beige-claro: #F5E7CE;
+            --verde-oscuro: #046A38;
+            --amarillo-dorado: #FFC72C;
+            --blanco: #FFFFFF;
+            --verde-medio: #1C7340;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--beige-claro);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            perspective: 1000px;
+        }
+
+        .card {
+            width: 400px;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card__front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+            border-radius: 15px;
+            padding: 25px;
+            box-sizing: border-box;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .card__logos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .card__logo-bolivar {
+            height: 60px;
+            filter: drop-shadow(0 0 1px black);
+        }
+
+        .card__logo-visa {
+            height: 112px;
+            filter: brightness(0);
+            position: absolute;
+            right: 20px;
+            top: -15px;
+            opacity: 0.8;
+            transform: scale(0.9);
+        }
+
+        .card__number {
+            color: var(--blanco);
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+        }
+
+        .card__details {
+            display: flex;
+            justify-content: space-between;
+            color: var(--blanco);
+        }
+
+        .card__holder span,
+        .card__expires span {
+            font-size: 12px;
+            opacity: 0.7;
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card__front">
+                <div class="card__logos">
+                    <img src="https://cloudfront-us-east-1.images.arcpublishing.com/semana/XHE2BGGCUJGWZFTJM6O22LAY4M.jpg" alt="Bolívar" class="card__logo-bolivar">
+                    <img src="/visa-svgrepo-com.svg" alt="Visa" class="card__logo-visa">
+                </div>
+                <div class="card__number" id="cardNumber">**** **** **** ****</div>
+                <div class="card__details">
+                    <div class="card__holder">
+                        <span>Card Holder</span>
+                        <div>NOMBRE DEL TITULAR</div>
+                    </div>
+                    <div class="card__expires">
+                        <span>Expires</span>
+                        <div id="expiryDate">MM/YY</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html> 
