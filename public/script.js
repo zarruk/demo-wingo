@@ -146,12 +146,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     async function sendWebhook(data) {
         try {
+            // Añadir el campo empresa a los datos
+            const dataWithCompany = data.map(item => ({
+                ...item,
+                empresa: 'wingo'
+            }));
+
             const response = await fetch('https://workflows.ops.sandbox.cuentamono.com/webhook/f5aee968-719a-4bb5-9915-7493b7b7394f', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(dataWithCompany)
             });
 
             if (!response.ok) {

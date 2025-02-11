@@ -3,9 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarjeta Bolívar - Visa</title>
+    <title>Tarjeta Wingo - Visa</title>
     <style>
         :root {
+            --wingo-purple: #6B3E99;
+            --wingo-white: #FFFFFF;
+            --wingo-black: #000000;
             --beige-claro: #F5E7CE;
             --verde-oscuro: #046A38;
             --amarillo-dorado: #FFC72C;
@@ -40,7 +43,7 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            background: linear-gradient(135deg, var(--verde-oscuro), var(--verde-medio));
+            background: linear-gradient(135deg, var(--wingo-purple), #552f7a);
             border-radius: 15px;
             padding: 25px;
             box-sizing: border-box;
@@ -56,7 +59,7 @@
 
         .card__logo-bolivar {
             height: 60px;
-            filter: drop-shadow(0 0 1px black);
+            filter: brightness(0) invert(1);
         }
 
         .card__logo-visa {
@@ -100,7 +103,7 @@
         <div class="card">
             <div class="card__front">
                 <div class="card__logos">
-                    <img src="https://cloudfront-us-east-1.images.arcpublishing.com/semana/XHE2BGGCUJGWZFTJM6O22LAY4M.jpg" alt="Bolívar" class="card__logo-bolivar">
+                    <img src="https://brandemia.org/sites/default/files/sites/default/files/wingo_logo.jpg" alt="Wingo" class="card__logo-bolivar">
                     <img src="/visa-svgrepo-com.svg" alt="Visa" class="card__logo-visa">
                 </div>
                 <div class="card__number" id="cardNumber"></div>
