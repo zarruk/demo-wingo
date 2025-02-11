@@ -82,62 +82,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function validateData(data) {
-        if (!Array.isArray(data) || data.length === 0) {
-            throw new Error('El archivo está vacío o tiene un formato incorrecto');
+        // Validar que haya datos
+        if (!data || !data.length) {
+            throw new Error('El archivo está vacío');
         }
 
-        const requiredFields = {
-            'nombre': 'Nombre',
-            'apellidos': 'Apellidos',
-            'tipo_documento': 'Tipo de documento',
-            'numero_documento': 'Número de documento',
-            'ciudad': 'Ciudad',
-            'departamento': 'Departamento',
-            'pais': 'País',
-            'codigo_postal': 'Código postal',
-            'telefono': 'Teléfono',
-            'direccion': 'Dirección',
-            'monto': 'Monto',
-            'descripcion': 'Descripción',
-            'fecha_nacimiento': 'Fecha de nacimiento',
-            'email': 'Email'
-        };
+        // Validar estructura de columnas
+        const requiredColumns = ['nombre', 'apellidos', 'tipo_documento', 'numero_documento', 'ciudad'];
+        const headers = Object.keys(data[0]).map(header => header.toLowerCase());
+        
+        const missingColumns = requiredColumns.filter(col => !headers.includes(col));
+        if (missingColumns.length) {
+            throw new Error(`Faltan las siguientes columnas requeridas: ${missingColumns.join(', ')}`);
+        }
 
+        // Validar cada fila
         data.forEach((row, index) => {
-            const missingFields = [];
-            
-            // Verificar campos faltantes
-            for (const [field, label] of Object.entries(requiredFields)) {
-                if (!row[field] && row[field] !== 0) {
-                    missingFields.push(label);
+            // Validar que no haya campos vacíos
+            requiredColumns.forEach(column => {
+                if (!row[column] || row[column].toString().trim() === '') {
+                    throw new Error(`Fila ${index + 1}: El campo ${column} es requerido`);
                 }
+            });
+
+            // Validar tipo de documento
+            const tiposDocumentoValidos = ['cc', 'ce', 'pasaporte'];
+            if (!tiposDocumentoValidos.includes(row.tipo_documento.toLowerCase())) {
+                throw new Error(`Fila ${index + 1}: Tipo de documento no válido. Debe ser uno de: ${tiposDocumentoValidos.join(', ')}`);
             }
 
-            if (missingFields.length > 0) {
-                throw new Error(`Fila ${index + 1}: Faltan los siguientes campos: ${missingFields.join(', ')}`);
-            }
-
-            // Validar teléfono (10 dígitos)
-            const phone = row.telefono.toString();
-            if (!/^\d{10}$/.test(phone)) {
-                throw new Error(`Fila ${index + 1}: El teléfono debe tener 10 dígitos (actual: ${phone})`);
-            }
-
-            // Validar que el monto sea un número
-            if (isNaN(Number(row.monto))) {
-                throw new Error(`Fila ${index + 1}: El monto debe ser un número válido`);
-            }
-
-            // Validar formato de email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(row.email)) {
-                throw new Error(`Fila ${index + 1}: El email no tiene un formato válido`);
-            }
-
-            // Validar fecha de nacimiento
-            const fechaNacimiento = new Date(row.fecha_nacimiento);
-            if (isNaN(fechaNacimiento.getTime())) {
-                throw new Error(`Fila ${index + 1}: La fecha de nacimiento no tiene un formato válido (debe ser YYYY-MM-DD)`);
+            // Validar número de documento (solo números)
+            if (!/^\d+$/.test(row.numero_documento)) {
+                throw new Error(`Fila ${index + 1}: El número de documento debe contener solo números`);
             }
         });
 
