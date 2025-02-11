@@ -24,7 +24,43 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    uploadBtn.addEventListener('click', processFile);
+    uploadBtn.addEventListener('click', async () => {
+        const file = fileInput.files[0];
+        if (!file) {
+            showMessage('Por favor selecciona un archivo', 'error');
+            return;
+        }
+
+        try {
+            // Mostrar estado de procesamiento
+            uploadBtn.disabled = true;
+            uploadBtn.classList.add('processing');
+            uploadBtn.textContent = 'Procesando...';
+            
+            const data = await readFile(file);
+            validateData(data);
+            await sendWebhook(data);
+            
+            // Mostrar mensaje de éxito
+            showMessage('¡Archivo procesado y enviado exitosamente!', 'success');
+            
+            // Limpiar el formulario
+            fileInput.value = '';
+            const dropZone = document.getElementById('dropZone');
+            dropZone.classList.remove('has-file');
+            const fileNameElement = dropZone.querySelector('.file-name');
+            if (fileNameElement) {
+                fileNameElement.remove();
+            }
+        } catch (error) {
+            showMessage(error.message, 'error');
+        } finally {
+            // Restaurar el botón
+            uploadBtn.disabled = false;
+            uploadBtn.classList.remove('processing');
+            uploadBtn.textContent = 'Procesar archivo';
+        }
+    });
 
     async function processFile() {
         const file = fileInput.files[0];
@@ -125,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Añadir el campo empresa a los datos
             const dataWithCompany = data.map(item => ({
                 ...item,
-                empresa: 'wingo'
+                empresa: 'wingo'  // Aseguramos que sea 'wingo' en minúsculas y como string
             }));
 
             const response = await fetch('https://workflows.ops.sandbox.cuentamono.com/webhook/f5aee968-719a-4bb5-9915-7493b7b7394f', {
@@ -147,5 +183,44 @@ document.addEventListener('DOMContentLoaded', function() {
     function showMessage(message, type) {
         messageDiv.innerHTML = message.replace(/\n/g, '<br>');
         messageDiv.className = `message ${type}`;
+        // Forzar un reflow para que la animación funcione
+        messageDiv.offsetHeight;
+        messageDiv.classList.add('show');
     }
+
+    function handleFile(file) {
+        const dropZone = document.getElementById('dropZone');
+        const fileNameElement = dropZone.querySelector('.file-name') || document.createElement('div');
+        
+        fileNameElement.className = 'file-name';
+        fileNameElement.textContent = `Archivo seleccionado: ${file.name}`;
+        
+        if (!dropZone.querySelector('.file-name')) {
+            dropZone.appendChild(fileNameElement);
+        }
+        
+        dropZone.classList.add('has-file');
+    }
+
+    // Actualizar el evento de input
+    fileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            handleFile(file);
+            // ... resto del código existente
+        }
+    });
+
+    // Actualizar el evento de drop
+    dropZone.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('dragover');
+        
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            handleFile(file);
+            fileInput.files = e.dataTransfer.files;
+            // ... resto del código existente
+        }
+    });
 }); 
